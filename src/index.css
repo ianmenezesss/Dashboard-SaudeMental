@@ -1,0 +1,41 @@
+.chart-box {
+  min-height: 260px;
+  height: 100%;
+}
+.chart-box-m{
+  min-height: 190px;
+  height: 100%;
+   
+}
+
+.chart-box.big {
+  min-height: 380px;
+}
+
+.chart-box:hover,
+.chart-box-m:hover {
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.chart-box:hover,
+.chart-box-m:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+svg:focus {
+  outline: none !important;
+}
+@media (max-width: 768px) {
+  .chart-box.big {
+    min-height: 260px;
+  }
+
+  .chart-box {
+    min-height: 180px;
+  }
+  .chart-box-m{
+     min-height: 180px;
+  }
+
+}
