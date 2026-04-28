@@ -1,4 +1,4 @@
-import React, { useState, useMemo,useEffect } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { useSheetData } from '../hooks/useSheetData'
 import PieChartConfig from './Charts/PieChartConfig'
 import BarChartConfig from './Charts/BarChart'
@@ -6,16 +6,18 @@ import ScatterChartConfig from './Charts/ScatterChartConfig'
 import HeatmapChart from './Charts/HeatmapChart'
 import RadarChartConfig from './Charts/RadarChartConfig'
 import LineChartConfig from './Charts/LineChartConfig'
+import StackedBarChart from './Charts/StackedBarChart'
 import ChartsConfig from './Charts/Config/ChartsConfig'
 
 const chartMap = {
-  pie:     PieChartConfig,
-  donnut:  PieChartConfig,
-  bar:     BarChartConfig,
-  scatter: ScatterChartConfig,
-  heatmap: HeatmapChart,
-  radar:   RadarChartConfig,
-  line:    LineChartConfig,
+  pie:        PieChartConfig,
+  donnut:     PieChartConfig,
+  bar:        BarChartConfig,
+  scatter:    ScatterChartConfig,
+  heatmap:    HeatmapChart,
+  radar:      RadarChartConfig,
+  line:       LineChartConfig,
+  stackedbar: StackedBarChart,
 }
 
 function RenderChart(chart, titleSize, isMain = false) {
@@ -47,8 +49,6 @@ function RenderChart(chart, titleSize, isMain = false) {
 
 function BodyCharts() {
   const { tema } = useSheetData()
-  
- 
 
   const filtered = useMemo(() => {
     const cat = tema || 'geral'
@@ -58,55 +58,41 @@ function BodyCharts() {
   const [isMobile, setIsMobile] = useState(false)
   const [order, setOrder] = useState([])
   const [page, setPage] = useState(0)
-const pageSize = 5
+  const pageSize = 5
 
-const displayCharts = useMemo(() => {
-  const base =
-    order.length === filtered.length &&
-    order.every(id => filtered.some(c => c.id === id))
-      ? order.map(id => filtered.find(c => c.id === id))
-      : filtered
+  const displayCharts = useMemo(() => {
+    const base =
+      order.length === filtered.length &&
+      order.every(id => filtered.some(c => c.id === id))
+        ? order.map(id => filtered.find(c => c.id === id))
+        : filtered
 
-  const start = page * pageSize
-  return base.slice(start, start + pageSize)
-}, [filtered, order, page,])
+    const start = page * pageSize
+    return base.slice(start, start + pageSize)
+  }, [filtered, order, page])
 
   function bringToFront(index) {
-  const globalIndex = page * pageSize + index
-
-  const newOrder = [...order]
-
-  const [item] = newOrder.splice(globalIndex, 1)
-  newOrder.unshift(item)
-
-  setOrder(newOrder)
-}
+    const globalIndex = page * pageSize + index
+    const newOrder = [...order]
+    const [item] = newOrder.splice(globalIndex, 1)
+    newOrder.unshift(item)
+    setOrder(newOrder)
+  }
 
   useEffect(() => {
-  if (filtered.length > 0) {
-    setOrder(filtered.map(c => c.id))
-  }
+    if (filtered.length > 0) setOrder(filtered.map(c => c.id))
+  }, [filtered])
 
-}, [filtered])
-useEffect(() => {
-  setPage(0)
+  useEffect(() => { setPage(0) }, [tema])
 
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 968)
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
-},[tema])
- useEffect(() => {
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 968)
-  }
-
-  handleResize() // seta valor inicial
-
-  window.addEventListener("resize", handleResize)
-
-  return () => {
-    window.removeEventListener("resize", handleResize)
-  }
-}, [])
-
+  const totalPages = Math.ceil(filtered.length / pageSize)
 
   return (
     <div className="container-fluid py-3 px-3" style={{ flex: 1, overflowY: 'auto' }}>
@@ -156,33 +142,58 @@ useEffect(() => {
         </div>
       )}
 
-   {filtered.length > pageSize && (
-  <div style={{
-    display: 'flex',
-    justifyContent: 'center',
-    gap: 20,
-    marginTop: 15
-  }}>
-    <button
-      onClick={() => setPage(p => Math.max(p - 1, 0))}
-      disabled={page === 0}
-    >
-      {"<"}
-    </button>
+      {/* Paginação */}
+      {filtered.length > pageSize && (
+        <div style={{
+          display: 'flex', justifyContent: 'center', alignItems: 'center',
+          gap: 12, marginTop: 20, marginBottom: 8,
+        }}>
+          <button
+            onClick={() => setPage(p => Math.max(p - 1, 0))}
+            disabled={page === 0}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 6,
+              padding: '8px 18px', borderRadius: 999, border: 'none',
+              background: page === 0 ? '#e2e8f0' : 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              color: page === 0 ? '#94a3b8' : '#fff',
+              fontWeight: 600, fontSize: 13,
+              cursor: page === 0 ? 'default' : 'pointer',
+              boxShadow: page === 0 ? 'none' : '0 2px 10px rgba(99,102,241,0.35)',
+              transition: 'all 0.2s',
+            }}
+          >
+            <span style={{ fontSize: 16 }}>‹</span> Anterior
+          </button>
 
-    <button
-      onClick={() =>
-        setPage(p => {
-          const maxPage = Math.floor((filtered.length - 1) / pageSize)
-          return Math.min(p + 1, maxPage)
-        })
-      }
-      disabled={(page + 1) * pageSize >= filtered.length}
-    >
-      {">"}
-    </button>
-  </div>
-)}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button key={i} onClick={() => setPage(i)} style={{
+                width: i === page ? 24 : 8, height: 8, borderRadius: 999,
+                border: 'none', padding: 0, cursor: 'pointer',
+                background: i === page ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : '#cbd5e1',
+                transition: 'all 0.25s ease',
+              }} />
+            ))}
+          </div>
+
+          <button
+            onClick={() => setPage(p => Math.min(p + 1, totalPages - 1))}
+            disabled={page >= totalPages - 1}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 6,
+              padding: '8px 18px', borderRadius: 999, border: 'none',
+              background: page >= totalPages - 1 ? '#e2e8f0' : 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              color: page >= totalPages - 1 ? '#94a3b8' : '#fff',
+              fontWeight: 600, fontSize: 13,
+              cursor: page >= totalPages - 1 ? 'default' : 'pointer',
+              boxShadow: page >= totalPages - 1 ? 'none' : '0 2px 10px rgba(99,102,241,0.35)',
+              transition: 'all 0.2s',
+            }}
+          >
+            Próximo <span style={{ fontSize: 16 }}>›</span>
+          </button>
+        </div>
+      )}
     </div>
   )
 }

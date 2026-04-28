@@ -230,6 +230,20 @@ const ChartsConfig = [
     type: 'pie',
     order: ['Sim', 'Não'],
   },
+  {
+    id: 'stacked-semestre-estresse-perfil',
+    title: 'Distribuição de estresse por semestre (%)',
+    question: 'SEMESTRE',
+    questionB: 'ESTRESSE',
+    categories: ['perfil'],
+    type: 'stackedbar',
+    orderX: ['1 - 2', '3 - 4', '5 - 6', '7 - 8', '9 - 10'],
+    orderY: ['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
+    eixoX: 'Semestre',
+    eixoY: 'Proporção (%)',
+    typsF: '',
+    typsB: '',
+  },
 
   // ─── EMOCIONAL ────────────────────────────────────────────────────────────
   {
@@ -277,6 +291,20 @@ const ChartsConfig = [
     categories: ['emocional'],
     type: 'donnut',
     order:['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
+  },
+  {
+    id: 'stacked-bemestar-ansiedade-emocional',
+    title: 'Impacto emocional no bem-estar por nível de ansiedade (%)',
+    question: 'ANSIEDADE_PZ',
+    questionB: 'BEM_ESTAR',
+    categories: ['emocional'],
+    type: 'stackedbar',
+    orderX: ['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
+    orderY: ['Muito', 'Moderadamente', 'Pouco', 'Nada'],
+    eixoX: 'Frequência de ansiedade',
+    eixoY: 'Proporção (%)',
+    typsF: '',
+    typsB: '',
   },
 
   // ─── AJUDA ────────────────────────────────────────────────────────────────

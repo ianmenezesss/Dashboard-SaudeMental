@@ -16,14 +16,12 @@ function transformData(values) {
 
 const sheetsData = async () => {
   try {
+    const key = import.meta.env.VITE_SHEETS_API_KEY
+    const id  = import.meta.env.VITE_SHEET_ID
     const res = await axios.get(
-      `https://sheets.googleapis.com/v4/spreadsheets/1C0PGRoDWGPG3plXLjx_NlBo-R7JHgwEpadRpju4T_bI/values/A1:Z1000?key=AIzaSyCdrCiWXDXIRWGW4kmnJz1q4p0Yo7iUJpA`
+      `https://sheets.googleapis.com/v4/spreadsheets/${id}/values/A1:Z1000?key=${key}`
     )
-
-    const data = transformData(res.data.values)
-
-    return data
-
+    return transformData(res.data.values)
   } catch (err) {
     console.error("Erro:", err)
     return []
@@ -31,4 +29,3 @@ const sheetsData = async () => {
 }
 
 export default sheetsData
-
