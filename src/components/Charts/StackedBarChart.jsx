@@ -135,7 +135,7 @@ function StackedBarChart({
               label={isMain ? {
                 value: eixoY || 'Proporção (%)',
                 position: 'insideBottom',
-                dy: 12,
+                dy: 1,
                 style: { fontSize: Math.max(9, titleSize - 10), fill: '#374151', fontWeight: 500 },
               } : undefined}
             />
@@ -149,8 +149,9 @@ function StackedBarChart({
                 value: eixoX,
                 angle: -90,
                 position: 'insideLeft',
-                dx: -10,
-                style: { fontSize: Math.max(9, titleSize - 10), fill: '#374151', fontWeight: 500 },
+                dx: 1,
+                dy: 100,
+                style: { fontSize: Math.max(13, titleSize - 10), fill: '#374151', fontWeight: 500 },
               } : undefined}
             />
 

@@ -16,13 +16,13 @@ const ChartsConfig = [
     type: 'donnut',
     order: ['1 - 2', '3 - 4', '5 - 6', '7 - 8', '9 - 10'],
   },
-  {
+  /*{
     id: 'geral-cursos',
     title: 'Distribuição de Cursos',
     question: 'CURSO',
     categories: ['geral'],
     type: 'pie',
-  },
+  },*/
   {
     id: 'idade-bar-semestre', 
     title: 'Distribuição de idades por semestre',
@@ -34,6 +34,14 @@ const ChartsConfig = [
     orderY: ['1 - 2', '3 - 4', '5 - 6', '7 - 8', '9 - 10'],
     eixoX:"Idade",
     typsB:"Semestre"
+  },
+  {
+    id: 'trabalha-perfil',
+    title: 'Estudantes trabalham ?',
+    question: 'TRABALHA',
+    categories: ['geral'],
+    type: 'pie',
+    order: ['Sim', 'Não'],
   },
 
 
@@ -120,6 +128,7 @@ const ChartsConfig = [
     type: 'bar',
     orderX:['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
     orderY:['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
+    eixoX:"Sente tarefas demais para a disponibilidade",
   },
   {
     id: 'Sono-PIES-habitos', 
@@ -146,6 +155,8 @@ const ChartsConfig = [
     orderX: ['1 - 2 h', '3 - 4 h', '5 - 6h','7h +'],
     orderY: ['Sim','Às vezes', 'Não'],
     type: 'heatmap',
+    typsF:"Horas de estudo",
+    typsB:"Sentimento de sobrecarga",
   },
   {
     id: 'desempenho-estresse-habitos', 
@@ -156,6 +167,7 @@ const ChartsConfig = [
     type: 'bar',
     orderX: ['Sim', 'Não'],
     orderY: ['1 - 2 h', '3 - 4 h', '5 - 6h','7h +'],
+    eixoX:"Ansiedade",
   },
   {
     id: 'desempenho-estresse-habitos-LINE',
@@ -166,6 +178,7 @@ const ChartsConfig = [
     type: 'line',
     orderX: ['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
     orderY: ['1 - 2 h', '3 - 4 h', '5 - 6h','7h +'],
+    eixoX:"Estresse",
   },
 
 
@@ -201,36 +214,6 @@ const ChartsConfig = [
     type: 'radar',
   },
   {
-    id: 'scatter-semestre-estresse-perfil',
-    title: 'Semestre atual × Estresse (por horas de estudo)',
-    questionX: 'SEMESTRE',
-    questionY: 'HORAS',
-    groupBy: 'ESTRESSE',
-    categories: ['perfil'],
-    orderX: ['1 - 2', '3 - 4', '5 - 6', '7 - 8', '9 - 10'],
-    orderY: ['1 - 2 h', '3 - 4 h', '5 - 6h','7h +'],
-    order: ['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
-    type: 'scatter',
-  },
-  {
-    id: 'trabalha-idade-perfil', 
-    title: 'Estudantes trabalham ? x Idade',
-    question: 'TRABALHA',
-    questionB: 'IDADE',
-    categories: ['perfil'],
-    type: 'bar',
-    orderX: ['Sim', 'Não'], 
-    orderY: ['17 - 19', '20 - 21', '21 - 22', '23 - 24', '25 +'],
-  },
-  {
-    id: 'trabalha-perfil',
-    title: 'Estudantes trabalham ?',
-    question: 'TRABALHA',
-    categories: ['geral', 'perfil'],
-    type: 'pie',
-    order: ['Sim', 'Não'],
-  },
-  {
     id: 'stacked-semestre-estresse-perfil',
     title: 'Distribuição de estresse por semestre (%)',
     question: 'SEMESTRE',
@@ -244,7 +227,31 @@ const ChartsConfig = [
     typsF: '',
     typsB: '',
   },
-
+  {
+    id: 'scatter-semestre-estresse-perfil',
+    title: 'Semestre atual × Estresse (por horas de estudo)',
+    questionX: 'SEMESTRE',
+    questionY: 'HORAS',
+    groupBy: 'ESTRESSE',
+    categories: ['perfil'],
+    orderX: ['1 - 2', '3 - 4', '5 - 6', '7 - 8', '9 - 10'],
+    orderY: ['1 - 2 h', '3 - 4 h', '5 - 6h','7h +'],
+    order: ['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
+    type: 'scatter',
+    eixoX:"Semestre",
+    eixoY:"Horas de estudo",
+  },
+  {
+    id: 'trabalha-idade-perfil', 
+    title: 'Estudantes trabalham ? x Idade',
+    question: 'TRABALHA',
+    questionB: 'IDADE',
+    categories: ['perfil'],
+    type: 'bar',
+    orderX: ['Sim', 'Não'], 
+    orderY: ['17 - 19', '20 - 21', '21 - 22', '23 - 24', '25 +'],
+    eixoX:"Idade",
+  },
   // ─── EMOCIONAL ────────────────────────────────────────────────────────────
   {
     id: 'ansiedade-bemestar-emocional', 
@@ -255,6 +262,7 @@ const ChartsConfig = [
     type: 'bar',
     orderX:['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
     orderY: ['Muito', 'Moderadamente', 'Pouco', 'Nada'],
+    eixoX:"Frequência de ansiedade",
   },
   {
     id: 'deixou-atividade-emocional',
@@ -263,34 +271,6 @@ const ChartsConfig = [
     categories: ['emocional'],
     type: 'pie',
     order: ['Sim', 'Não'],
-  },
-  {
-    id: 'heatmap-emocional-carga-emocional',
-    title: 'Deixou de fazer atividade por problemas emocionais × Sobrecarga de estudos',
-    question: 'DEIXOU',
-    questionB: 'CARGA',
-    categories: ['emocional'],
-    orderX: ['Sim', 'Não'],
-    orderY: ['Sim', 'Às vezes', 'Não'],
-    type: 'heatmap',
-  },
-  {
-    id: 'heatmap-emocional-carga-2',
-    title: 'Dificuldade para dormir × Sentimento de sobrecarga',
-    question: 'SONO',
-    questionB: 'CARGA',
-    categories: ['emocional'],
-    orderX: ['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
-    orderY: ['Sim', 'Às vezes', 'Não'],
-    type: 'heatmap',
-  },
-  {
-    id: 'frequencia-ansiedade-emocional',
-    title: 'Frequência de ansiedade/estresse',
-    question: 'ESTRESSE',
-    categories: ['emocional'],
-    type: 'donnut',
-    order:['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
   },
   {
     id: 'stacked-bemestar-ansiedade-emocional',
@@ -306,6 +286,38 @@ const ChartsConfig = [
     typsF: '',
     typsB: '',
   },
+  {
+    id: 'heatmap-emocional-carga-emocional',
+    title: 'Deixou de fazer atividade por problemas emocionais × Sobrecarga de estudos',
+    question: 'DEIXOU',
+    questionB: 'CARGA',
+    categories: ['emocional'],
+    orderX: ['Sim', 'Não'],
+    orderY: ['Sim', 'Às vezes', 'Não'],
+    type: 'heatmap',
+    typsF:"Deixou de fazer atividade por problemas emocionais",
+    typsB:"Sobrecarga de estudos",
+  },
+  {
+    id: 'frequencia-ansiedade-emocional',
+    title: 'Frequência de ansiedade/estresse',
+    question: 'ESTRESSE',
+    categories: ['emocional'],
+    type: 'donnut',
+    order:['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
+  },
+  {
+    id: 'heatmap-emocional-carga-2',
+    title: 'Dificuldade para dormir × Sentimento de sobrecarga',
+    question: 'SONO',
+    questionB: 'CARGA',
+    categories: ['emocional'],
+    orderX: ['Sempre', 'Frequentemente', 'Às vezes', 'Raramente', 'Nunca'],
+    orderY: ['Sim', 'Às vezes', 'Não'],
+    type: 'heatmap',
+    typsF:"Dificuldade para dormir",
+    typsB:"Sobrecarga",
+  },
 
   // ─── AJUDA ────────────────────────────────────────────────────────────────
   {
@@ -317,6 +329,7 @@ const ChartsConfig = [
     type: 'bar',
     orderX: ['Sim', 'Parcialmente', 'Não'],
     orderY: [],
+    eixoX: 'Recebeu suporte',
   },
   {
     id: 'impede-ajuda',
@@ -327,9 +340,9 @@ const ChartsConfig = [
   },
   {
     id: 'busca-ajuda',
-    title: 'Costuma buscar ajuda?',
+    title: 'Estudantes Costumam buscar ajuda?',
     question: 'BUSCA_AJUDA1',
-    categories: ['ajuda'],
+    categories: ['ajuda', 'geral'],
     type: 'pie',
     order: ['Sim, profissional', 'Sim, apoio de amigos ou família', 'Não costumo buscar ajuda'],
   },
@@ -350,6 +363,7 @@ const ChartsConfig = [
     type: 'bar',
     orderX: ['Sim', 'Parcialmente', 'Não'],
     orderY: ['Sim, profissional', 'Sim, apoio de amigos ou família', 'Não costumo buscar ajuda'],
+      eixoX: 'Recebeu suporte',
   },
 ]
 
